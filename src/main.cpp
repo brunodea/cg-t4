@@ -2,20 +2,14 @@
 #include <cstdlib>
 
 #include "macros.h"
+#include "Controller/Controller.h"
 
 /*
  * Callback functions
  */
 void GLFWCALL keyEventCallback(int key, int state)
 {
-}
-
-void GLFWCALL mousePosCallback(int x, int y)
-{
-}
-
-void GLFWCALL mouseButtonCallback(int button, int action)
-{
+    CONTROLLER->onKeyPressed(key, state);
 }
 
 void GLFWCALL handleResize(int width, int height)
@@ -24,6 +18,7 @@ void GLFWCALL handleResize(int width, int height)
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
+    
     gluPerspective(45.f,(float)width/(float)height,0.1,5000);
 
     glMatrixMode(GL_MODELVIEW);
@@ -33,18 +28,19 @@ void GLFWCALL handleResize(int width, int height)
 void setCallBacks()
 {
     glfwSetKeyCallback(keyEventCallback);
-    glfwSetMousePosCallback(mousePosCallback);
-    glfwSetMouseButtonCallback(mouseButtonCallback);
-
     glfwSetWindowSizeCallback(handleResize);
 }
 
 void initOpenGL()
 {
     handleResize(WINDOW_WIDTH, WINDOW_HEIGHT);
-    
     glEnable(GL_DEPTH_TEST);
     glClearColor(0.f, 0.f, 0.f, 1.f);
+}
+
+void clear()
+{
+    delete CONTROLLER;
 }
 
 int main()
@@ -62,6 +58,10 @@ int main()
     initOpenGL();
     setCallBacks();
 
+    CONTROLLER->run();
+
+    clear();
     glfwTerminate();
     exit(EXIT_SUCCESS);
 }
+

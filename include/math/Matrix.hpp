@@ -176,7 +176,7 @@ namespace math
         return res;
     }
 
-} //end of namespace Core.
+} //end of namespace math.
 
 #endif
 

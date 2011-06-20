@@ -16,6 +16,9 @@
     <Filter Include="Header Files\math">
       <UniqueIdentifier>{ef55d7ed-be8d-4a91-a752-baf505097a24}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Controller">
+      <UniqueIdentifier>{1bfe4bb9-1b4b-41f9-979d-e648688d3cc0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\math\Matrix.hpp">
@@ -30,10 +33,16 @@
     <ClInclude Include="..\include\macros.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\Controller\Controller.h">
+      <Filter>Header Files\Controller</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Controller\Controller.cpp">
+      <Filter>Header Files\Controller</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
