@@ -2,6 +2,7 @@
 #include <iostream>
 
 #include "glfw.h"
+#include "macros.h"
 
 Controller *Controller::m_sInstance = NULL;
 
@@ -50,7 +51,10 @@ void Controller::onUpdate()
 {
     if(m_bRunning)
         m_bRunning = !glfwGetWindowParam(GLFW_OPENED) == 0;
-    handleKeyPress();
+    cameraOnKeyPress();
+
+    if(m_pCurrentCamera == &m_FreeCamera)
+        m_pCurrentCamera->setTarget(m_pCurrentCamera->direction()+m_pCurrentCamera->eye());
 }
 
 void Controller::onRender()
@@ -61,7 +65,7 @@ void Controller::onRender()
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    
+
     gluLookAt(eye[0],eye[1],eye[2], target[0],target[1],target[2], up[0],up[1],up[2]);
 
     glPushMatrix();
@@ -77,20 +81,20 @@ void Controller::onKeyPressed(int key, int state)
         m_bRunning = false;
 }
 
-void Controller::handleKeyPress()
+void Controller::cameraOnKeyPress()
 {
     if(glfwGetKey('S') == GLFW_PRESS)
-        m_FreeCamera.moveBackwards();
+        m_pCurrentCamera->moveBackwards();
     else if(glfwGetKey('W') == GLFW_PRESS)
-        m_FreeCamera.moveForward();
+        m_pCurrentCamera->moveForward();
 
     if(glfwGetKey('A') == GLFW_PRESS)
-        m_FreeCamera.moveLeft();
+        m_pCurrentCamera->moveLeft();
     else if(glfwGetKey('D') == GLFW_PRESS)
-        m_FreeCamera.moveRight();
+        m_pCurrentCamera->moveRight();
 
     if(glfwGetKey('Z') == GLFW_PRESS)
-        m_FreeCamera.moveUp();
+        m_pCurrentCamera->moveUp();
     else if(glfwGetKey('X') == GLFW_PRESS)
-        m_FreeCamera.moveDown();
+        m_pCurrentCamera->moveDown();
 }

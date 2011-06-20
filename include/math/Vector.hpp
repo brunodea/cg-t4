@@ -81,6 +81,15 @@ namespace math
 
         return res;
     }
+
+    template<class T, unsigned int M>
+    inline Vector<T, M> operator +(const Vector<T, M> &v1, const Vector<T, M> &v2)
+    {
+        Vector<T, M> res = v1;
+        res += v2;
+
+        return res;
+    }
 } //end of namespace math.
 
 #endif

@@ -19,7 +19,7 @@ private:
     void onUpdate();
     void onRender();
     
-    void handleKeyPress();
+    void cameraOnKeyPress();
 
 private:
     static Controller *m_sInstance;
