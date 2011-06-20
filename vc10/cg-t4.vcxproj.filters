@@ -16,6 +16,9 @@
     <Filter Include="Header Files\math">
       <UniqueIdentifier>{ef55d7ed-be8d-4a91-a752-baf505097a24}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\math\Curves">
+      <UniqueIdentifier>{108a2073-3ef8-452c-a508-612fdb7c8a46}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Header Files\Controller">
       <UniqueIdentifier>{1bfe4bb9-1b4b-41f9-979d-e648688d3cc0}</UniqueIdentifier>
     </Filter>
@@ -34,6 +37,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\include\Controller\Controller.h">
+      <Filter>Header Files\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\math\Curves\Bezier.hpp">
+      <Filter>Header Files\math\Curves</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\math\Curves\BezierSurface.h">
+      <Filter>Header Files\math\Curves</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\math\Curves\math_aux.hpp">
+      <Filter>Header Files\math\Curves</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Controller\Camera.hpp">
       <Filter>Header Files\Controller</Filter>
     </ClInclude>
   </ItemGroup>

@@ -6,8 +6,9 @@
 Controller *Controller::m_sInstance = NULL;
 
 Controller::Controller()
-    : m_bRunning(true)
+    : m_bRunning(true),  m_BezierSurface(13), m_FreeCamera(math::vector3f(0,0,-1),math::vector3f(0,0,0),math::vector3f(0,1,0))
 {
+    m_pCurrentCamera = &m_FreeCamera;
 }
 
 Controller *Controller::instance()
@@ -49,14 +50,47 @@ void Controller::onUpdate()
 {
     if(m_bRunning)
         m_bRunning = !glfwGetWindowParam(GLFW_OPENED) == 0;
+    handleKeyPress();
 }
 
 void Controller::onRender()
 {
+    math::Vector3 eye = m_pCurrentCamera->eye();
+    math::Vector3 target = m_pCurrentCamera->target();
+    math::Vector3 up = m_pCurrentCamera->up();
+
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    
+    gluLookAt(eye[0],eye[1],eye[2], target[0],target[1],target[2], up[0],up[1],up[2]);
+
+    glPushMatrix();
+        glColor4f(1.f,1.f,1.f,1.f);
+        //glScalef(30.f,30.f,30.f);
+        m_BezierSurface.drawWireframe();
+    glPopMatrix();
 }
 
 void Controller::onKeyPressed(int key, int state)
 {
     if(key == GLFW_KEY_ESC)
         m_bRunning = false;
+}
+
+void Controller::handleKeyPress()
+{
+    if(glfwGetKey('S') == GLFW_PRESS)
+        m_FreeCamera.moveBackwards();
+    else if(glfwGetKey('W') == GLFW_PRESS)
+        m_FreeCamera.moveForward();
+
+    if(glfwGetKey('A') == GLFW_PRESS)
+        m_FreeCamera.moveLeft();
+    else if(glfwGetKey('D') == GLFW_PRESS)
+        m_FreeCamera.moveRight();
+
+    if(glfwGetKey('Z') == GLFW_PRESS)
+        m_FreeCamera.moveUp();
+    else if(glfwGetKey('X') == GLFW_PRESS)
+        m_FreeCamera.moveDown();
 }

@@ -54,25 +54,25 @@ namespace math
                         math::Vector4 p = math::toVector4f(m_vPatch.at((i*m_PatchLen)+j));
                         math::Vector4 p2 = math::toVector4f(m_vPatch.at(((i+1)*m_PatchLen)+j));
                         math::Vector4 p4 = math::toVector4f(m_vPatch.at((i*m_PatchLen)+j+1));
-                        
-                        glVertex2f(p[0], p[1]);
-                        glVertex2f(p2[0], p2[1]);
-                        glVertex2f(p[0], p[1]);
-                        glVertex2f(p4[0], p4[1]);
+
+                        glVertex3f(p[0], p[1], p[2]);
+                        glVertex3f(p2[0], p2[1], p2[2]);
+                        glVertex3f(p[0], p[1],p[2]);
+                        glVertex3f(p4[0], p4[1], p4[2]);
 
                         if(i == m_PatchLen-2)
                         {
                             math::Vector4 p3 = math::toVector4f(m_vPatch.at(((i+1)*m_PatchLen)+j+1));
                             
-                            glVertex2f(p2[0], p2[1]);
-                            glVertex2f(p3[0], p3[1]);
+                            glVertex3f(p2[0], p2[1], p2[2]);
+                            glVertex3f(p3[0], p3[1], p3[2]);
                         }
                         if(j == m_PatchLen-2)
                         {
                             math::Vector4 p3 = math::toVector4f(m_vPatch.at(((i+1)*m_PatchLen)+j+1));
-
-                            glVertex2f(p4[0], p4[1]);
-                            glVertex2f(p3[0], p3[1]);
+                            
+                            glVertex3f(p4[0], p4[1], p4[2]);
+                            glVertex3f(p3[0], p3[1], p3[2]);
                         }
                     }
                 }
