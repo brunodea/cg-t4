@@ -13,6 +13,12 @@ public:
         m_fSpeed = 1.f;
     }
 
+    void rotate(float roll_angle, float yaw_angle, float pitch_angle)
+    {
+        math::Matrix4 m = math::rotateZ(pitch_angle)*math::rotateY(yaw_angle)*math::rotateX(roll_angle);
+        transform(m);
+    }
+
     void moveForward() { m_vEye3 += m_vDirection3*m_fSpeed; }
     void moveBackwards() { m_vEye3 -= m_vDirection3*m_fSpeed; }
     void moveLeft() { m_vEye3 += m_vRight3*m_fSpeed; }
@@ -43,6 +49,23 @@ public:
         m_vDirection3 = math::normalize(m_vTarget3 - m_vEye3);
         m_vRight3 = math::normalize(m_vUp3.crossProduct(m_vDirection3));
         m_vUp3 = m_vDirection3.crossProduct(m_vRight3);
+    }
+private:
+    void transform(const math::Matrix4 &mat)
+    {
+        math::Matrix4 m = mat;
+
+        math::Vector4 dir = math::toVector4f(m_vDirection3);
+        dir = m*dir;
+        m_vDirection3 = math::normalize(math::toVector3f(dir));
+
+        math::Vector4 up = math::toVector4f(m_vUp3);
+        up = m*up;
+        m_vUp3 = math::normalize(math::toVector3f(up));
+
+        math::Vector4 right = math::toVector4f(m_vRight3);
+        right = m*right;
+        m_vRight3 = math::normalize(math::toVector3f(right));
     }
 
 private:
