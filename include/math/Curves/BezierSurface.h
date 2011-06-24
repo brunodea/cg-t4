@@ -47,9 +47,9 @@ namespace math
         void drawWireframe()
         {
             glBegin(GL_LINES);
-                for(unsigned int i = 0; i < m_PatchLen-1; i++)
+                for(int i = 0; i < m_PatchLen-1; i++)
                 {
-                    for(unsigned int j = 0; j < m_PatchLen-1; j++)
+                    for(int j = 0; j < m_PatchLen-1; j++)
                     {
                         math::Vector4 p = math::toVector4f(m_vPatch.at((i*m_PatchLen)+j));
                         math::Vector4 p2 = math::toVector4f(m_vPatch.at(((i+1)*m_PatchLen)+j));
@@ -142,9 +142,9 @@ namespace math
                 std::vector<math::Vector3> vs;
                 for(unsigned int j = 0; j < m_iDegree; j++)
                 {
-                    float x = i;
-                    float y = rand()%10*pow(-1.f,(rand()%2)+1);
-                    float z = j;
+                    float x = (float)i;
+                    float y = (float)(rand()%10*pow(-1.f,(rand()%2)+1));
+                    float z = (float)j;
                     vs.push_back(math::vector3f(x,y,z));
                 }
                 m_Bezier.addControlPoints(vs);

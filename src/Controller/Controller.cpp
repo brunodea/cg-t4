@@ -70,7 +70,7 @@ void Controller::onRender()
 
     glPushMatrix();
         glColor4f(1.f,1.f,1.f,1.f);
-        //glScalef(30.f,30.f,30.f);
+        glScalef(30.f,30.f,30.f);
         m_BezierSurface.drawWireframe();
     glPopMatrix();
 }
@@ -83,6 +83,8 @@ void Controller::onKeyPressed(int key, int state)
 
 void Controller::cameraOnKeyPress()
 {
+    rotateCamera();
+
     if(glfwGetKey('S') == GLFW_PRESS)
         m_pCurrentCamera->moveBackwards();
     else if(glfwGetKey('W') == GLFW_PRESS)
@@ -97,4 +99,23 @@ void Controller::cameraOnKeyPress()
         m_pCurrentCamera->moveUp();
     else if(glfwGetKey('X') == GLFW_PRESS)
         m_pCurrentCamera->moveDown();
+}
+
+void Controller::rotateCamera()
+{
+    float angle = PI/50.f;
+    if(glfwGetKey('L') == GLFW_PRESS)
+        m_pCurrentCamera->rotate(0.f,angle,0.f);
+    else if(glfwGetKey('J') == GLFW_PRESS)
+        m_pCurrentCamera->rotate(0.f,-angle,0.f);
+
+    if(glfwGetKey('U') == GLFW_PRESS)
+        m_pCurrentCamera->rotate(0.f,0.f,angle);
+    else if(glfwGetKey('O') == GLFW_PRESS)
+        m_pCurrentCamera->rotate(0.f,0.f,-angle);
+
+    if(glfwGetKey('I') == GLFW_PRESS)
+        m_pCurrentCamera->rotate(angle,0.f,0.f);
+    else if(glfwGetKey('K') == GLFW_PRESS)
+        m_pCurrentCamera->rotate(-angle,0.f,0.f);
 }

@@ -20,6 +20,7 @@ private:
     void onRender();
     
     void cameraOnKeyPress();
+    void rotateCamera();
 
 private:
     static Controller *m_sInstance;
