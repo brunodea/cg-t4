@@ -90,6 +90,21 @@ namespace math
 
         return res;
     }
+
+    template<class T, unsigned int M, unsigned int N, unsigned int P>
+    inline Vector<T, M> operator *(Matrix<T, M, N> &m1, Vector<T, N> &v)
+    {
+        Vector<T, M, P> res;
+        for(unsigned int i = 0; i < M; i++)
+        {
+            T val = 0;
+            for(unsigned int k = 0; k < N; k++)
+                val += m1(i, k)*v[k];
+            res[i] = val;
+        }
+        return res;
+    }
+
 } //end of namespace math.
 
 #endif
