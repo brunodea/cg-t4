@@ -74,6 +74,11 @@
     <ClInclude Include="..\include\math\Matrix.hpp" />
     <ClInclude Include="..\include\math\matrix_functions.hpp" />
     <ClInclude Include="..\include\math\Vector.hpp" />
+    <ClInclude Include="..\include\model\Arm.hpp" />
+    <ClInclude Include="..\include\model\Box.hpp" />
+    <ClInclude Include="..\include\model\MunckMunk.hpp" />
+    <ClInclude Include="..\include\model\Object.hpp" />
+    <ClInclude Include="..\include\model\Pistao.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\Controller\Controller.cpp" />

@@ -2,7 +2,7 @@
 #define _BRUNODEA_BEZIER_HPP_
 
 #include "math/matrix_functions.hpp"
-#include "math/Curves/math_aux.hpp"
+#include "math/math_aux.hpp"
 #include <vector>
 #include <cmath>
 #include <cstdlib>

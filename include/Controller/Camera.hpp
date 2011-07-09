@@ -7,7 +7,7 @@ class Camera
 {
 public:
     Camera(const math::Vector3 &eye, const math::Vector3 &target, const math::Vector3 &up)
-        : m_vEye3(eye), m_vTarget3(target), m_vUp3(up)
+        : m_vEye3(eye), m_vTarget3(target), m_vUp3(up), m_fRollAngle(0.f), m_fYawAngle(0.f), m_fPitchAngle(0.f)
     {
         adjustAxes();
         m_fSpeed = 1.f;
@@ -15,8 +15,12 @@ public:
 
     void rotate(float roll_angle, float yaw_angle, float pitch_angle)
     {
-        math::Matrix4 m = math::rotateZ(pitch_angle)*math::rotateY(yaw_angle)*math::rotateX(roll_angle);
-        transform(m);
+        setRollAngle(getRollAngle()+roll_angle);
+        setYawAngle(getYawAngle()+yaw_angle);
+        setPitchAngle(getPitchAngle()+pitch_angle);
+
+        //math::Matrix4 m = math::rotateZ(pitch_angle)*math::rotateY(yaw_angle)*math::rotateX(roll_angle);
+        //transform(m);
     }
 
     void moveForward() { m_vEye3 += m_vDirection3*m_fSpeed; }
@@ -50,6 +54,16 @@ public:
         m_vRight3 = math::normalize(m_vUp3.crossProduct(m_vDirection3));
         m_vUp3 = m_vDirection3.crossProduct(m_vRight3);
     }
+
+    void setRollAngle(float roll) { m_fRollAngle = roll; }
+    float getRollAngle() { return m_fRollAngle; }
+
+    void setYawAngle(float yaw) { m_fYawAngle = yaw; }
+    float getYawAngle() { return m_fYawAngle; }
+
+    void setPitchAngle(float pitch) { m_fPitchAngle = pitch; }
+    float getPitchAngle() { return m_fPitchAngle; }
+
 private:
     void transform(const math::Matrix4 &mat)
     {
@@ -76,6 +90,10 @@ private:
     math::Vector3 m_vRight3;
 
     float m_fSpeed;
+
+    float m_fRollAngle;
+    float m_fYawAngle;
+    float m_fPitchAngle;
 
 }; //end of class Camera.
 #endif

@@ -104,7 +104,6 @@ namespace math
         }
         return res;
     }
-
 } //end of namespace math.
 
 #endif

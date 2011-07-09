@@ -248,6 +248,11 @@ namespace math
         return vector3f(v(0,0),v(1,0),v(2,0));
     }
 
+    inline float distance(const Vector3 &p1, const Vector3 &p2)
+    {
+        return sqrt(pow(p2(0,0)-p1(0,0),2)+pow(p2(1,0)-p1(1,0),2)+pow(p2(2,0)+p1(2,0),2));
+    }
+
 } //end of namespace math.
 
 

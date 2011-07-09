@@ -3,6 +3,7 @@
 
 #include "math/Curves/BezierSurface.h"
 #include "Controller/Camera.hpp"
+#include "model/MunckMunk.hpp"
 
 class Controller
 {
@@ -22,11 +23,15 @@ private:
     void cameraOnKeyPress();
     void rotateCamera();
 
+    void munckMunkOnKeyPress();
+
 private:
     static Controller *m_sInstance;
     bool m_bRunning;
 
     math::BezierSurface m_BezierSurface;
+    model::MunckMunk m_MunckMunk;
+
     Camera m_FreeCamera;
     Camera *m_pCurrentCamera;
 

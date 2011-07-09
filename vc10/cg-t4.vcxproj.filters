@@ -22,6 +22,9 @@
     <Filter Include="Header Files\Controller">
       <UniqueIdentifier>{1bfe4bb9-1b4b-41f9-979d-e648688d3cc0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\model">
+      <UniqueIdentifier>{0f4830e9-43d1-41c1-bf96-c4388e75fcee}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\math\Matrix.hpp">
@@ -45,11 +48,26 @@
     <ClInclude Include="..\include\math\Curves\BezierSurface.h">
       <Filter>Header Files\math\Curves</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\math\Curves\math_aux.hpp">
-      <Filter>Header Files\math\Curves</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\Controller\Camera.hpp">
       <Filter>Header Files\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\model\Pistao.hpp">
+      <Filter>Header Files\model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\model\Arm.hpp">
+      <Filter>Header Files\model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\model\Box.hpp">
+      <Filter>Header Files\model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\math\Curves\math_aux.hpp">
+      <Filter>Header Files\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\model\MunckMunk.hpp">
+      <Filter>Header Files\model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\model\Object.hpp">
+      <Filter>Header Files\model</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
