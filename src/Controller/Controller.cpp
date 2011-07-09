@@ -122,7 +122,7 @@ void Controller::rotateCamera()
     float yaw = m_pCurrentCamera->getYawAngle();
     float pitch = m_pCurrentCamera->getPitchAngle();
 
-    float angle = (float)PI;
+    float angle = (float)PI/50.f;
     if(glfwGetKey('U') == GLFW_PRESS)
         m_pCurrentCamera->rotate(angle,0.f,0.f);
     else if(glfwGetKey('O') == GLFW_PRESS)

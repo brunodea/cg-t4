@@ -47,13 +47,19 @@ namespace model
             int dir = (up ? 1 : -1);
             unsigned int size = m_Arms.size();
             if(size > 0)
-                m_iCurrArm = (m_iCurrArm + dir) % size;
+            {
+                int v = m_iCurrArm + dir;
+                v = (v < 0 ? size-1 : v);
+                m_iCurrArm = v % size;
+            }
             else
                 m_iCurrArm = -1;
         }
 
         void rotateCurrArm(float roll, float yaw, float pitch)
         {
+            if(m_iCurrArm == 0) //primeiro braco eh fixo.
+                return;
             for(unsigned int i = m_iCurrArm; i < m_Arms.size(); i++)
             {
                 Arm *a = &m_Arms.at(i);

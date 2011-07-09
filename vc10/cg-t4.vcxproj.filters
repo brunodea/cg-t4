@@ -60,14 +60,17 @@
     <ClInclude Include="..\include\model\Box.hpp">
       <Filter>Header Files\model</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\math\Curves\math_aux.hpp">
-      <Filter>Header Files\math</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\model\MunckMunk.hpp">
       <Filter>Header Files\model</Filter>
     </ClInclude>
     <ClInclude Include="..\include\model\Object.hpp">
       <Filter>Header Files\model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\model\Cylinder.hpp">
+      <Filter>Header Files\model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\math\math_aux.hpp">
+      <Filter>Header Files\math</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

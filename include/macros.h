@@ -6,6 +6,6 @@
 
 #define CONTROLLER Controller::instance()
 
-#define PI 3.14159265
+#define PI 3.14159265f
 
 #endif

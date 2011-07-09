@@ -2,6 +2,7 @@
 #define _BRUNODEA_CAMERA_HPP_
 
 #include "math/matrix_functions.hpp"
+#include "math/math_aux.hpp"
 
 class Camera
 {
@@ -15,12 +16,12 @@ public:
 
     void rotate(float roll_angle, float yaw_angle, float pitch_angle)
     {
-        setRollAngle(getRollAngle()+roll_angle);
-        setYawAngle(getYawAngle()+yaw_angle);
-        setPitchAngle(getPitchAngle()+pitch_angle);
-
-        //math::Matrix4 m = math::rotateZ(pitch_angle)*math::rotateY(yaw_angle)*math::rotateX(roll_angle);
-        //transform(m);
+        /*math::Matrix4 m = math::rotateZ(pitch_angle)*math::rotateY(yaw_angle)*math::rotateX(roll_angle);
+        transform(m);*/
+        
+        setRollAngle(getRollAngle()+math::radToDegree(roll_angle));
+        setYawAngle(getYawAngle()+math::radToDegree(yaw_angle));
+        setPitchAngle(getPitchAngle()+math::radToDegree(pitch_angle));
     }
 
     void moveForward() { m_vEye3 += m_vDirection3*m_fSpeed; }

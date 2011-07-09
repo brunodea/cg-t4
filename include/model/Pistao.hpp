@@ -40,8 +40,14 @@ namespace model
         void setMaxLength(float mlen) { m_fMaxLength = mlen; }
         float getMaxLength() { return m_fMaxLength; }
 
-        void setMobilePoint(const math::Vector3 &p) { m_MobilePoint = p; }
-
+        void setMobilePoint(const math::Vector3 &p) 
+        {
+            
+            m_MobilePoint = p; 
+        }
+        
+    private:
+        
         bool canMoveUp()
         {
             return (math::distance(m_BasePoint,m_MobilePoint) <= m_fMaxLength);
