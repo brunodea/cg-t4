@@ -12,7 +12,7 @@ namespace model
             : m_Position(pos)
         {}
 
-        virtual void drawWireframe() = 0;
+        virtual void draw(bool wireframe) = 0;
 
         void setPos(const math::Vector3 &pos) { m_Position = pos; }
         math::Vector3 pos() { return m_Position; }

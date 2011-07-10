@@ -15,78 +15,21 @@ namespace math
     class BezierSurface
     {
     public:
-        enum DrawType
-        {
-            DRAW_LINES = 0,
-            DRAW_POINTS
-        };
-
-    public:
         BezierSurface(unsigned int degree)
             : m_Bezier(), m_vPatch(), m_iDegree(degree)
         {
             init(); 
         }
 
-        void draw(DrawType dt=DRAW_LINES)
+        void draw(bool wireframe)
         {
-            switch(dt)
-            {
-            case DRAW_LINES:
-                drawWireframe();
-                break;
-            case DRAW_POINTS:
-                drawCloud();
-                break;
-            default:
-                drawWireframe();
-                break;
-            }
-        }
+            if(wireframe)
+                glBegin(GL_LINES);
+            else
+                glBegin(GL_TRIANGLE_FAN);
+            
+            drawVertices();
 
-        void drawWireframe()
-        {
-            glBegin(GL_LINES);
-                for(int i = 0; i < m_PatchLen-1; i++)
-                {
-                    for(int j = 0; j < m_PatchLen-1; j++)
-                    {
-                        math::Vector4 p = math::toVector4f(m_vPatch.at((i*m_PatchLen)+j));
-                        math::Vector4 p2 = math::toVector4f(m_vPatch.at(((i+1)*m_PatchLen)+j));
-                        math::Vector4 p4 = math::toVector4f(m_vPatch.at((i*m_PatchLen)+j+1));
-
-                        glVertex3f(p[0], p[1], p[2]);
-                        glVertex3f(p2[0], p2[1], p2[2]);
-                        glVertex3f(p[0], p[1],p[2]);
-                        glVertex3f(p4[0], p4[1], p4[2]);
-
-                        if(i == m_PatchLen-2)
-                        {
-                            math::Vector4 p3 = math::toVector4f(m_vPatch.at(((i+1)*m_PatchLen)+j+1));
-                            
-                            glVertex3f(p2[0], p2[1], p2[2]);
-                            glVertex3f(p3[0], p3[1], p3[2]);
-                        }
-                        if(j == m_PatchLen-2)
-                        {
-                            math::Vector4 p3 = math::toVector4f(m_vPatch.at(((i+1)*m_PatchLen)+j+1));
-                            
-                            glVertex3f(p4[0], p4[1], p4[2]);
-                            glVertex3f(p3[0], p3[1], p3[2]);
-                        }
-                    }
-                }
-            glEnd();
-        }
-
-        void drawCloud()
-        {
-            glBegin(GL_POINTS);
-                for(unsigned int i = 0; i < m_vPatch.size(); i++)
-                {
-                    math::Vector4 p = math::toVector4f(m_vPatch.at(i));
-                    glVertex2f(p[0], p[1]);
-                }
             glEnd();
         }
 
@@ -150,6 +93,39 @@ namespace math
                 m_Bezier.addControlPoints(vs);
             }
             updatePatches(0.0415f); //0.0415f melhor precisao.
+        }
+
+        void drawVertices()
+        {
+            for(int i = 0; i < m_PatchLen-1; i++)
+            {
+                for(int j = 0; j < m_PatchLen-1; j++)
+                {
+                    math::Vector4 p = math::toVector4f(m_vPatch.at((i*m_PatchLen)+j));
+                    math::Vector4 p2 = math::toVector4f(m_vPatch.at(((i+1)*m_PatchLen)+j));
+                    math::Vector4 p4 = math::toVector4f(m_vPatch.at((i*m_PatchLen)+j+1));
+
+                    glVertex3f(p[0], p[1], p[2]);
+                    glVertex3f(p2[0], p2[1], p2[2]);
+                    glVertex3f(p[0], p[1],p[2]);
+                    glVertex3f(p4[0], p4[1], p4[2]);
+
+                    if(i == m_PatchLen-2)
+                    {
+                        math::Vector4 p3 = math::toVector4f(m_vPatch.at(((i+1)*m_PatchLen)+j+1));
+                            
+                        glVertex3f(p2[0], p2[1], p2[2]);
+                        glVertex3f(p3[0], p3[1], p3[2]);
+                    }
+                    if(j == m_PatchLen-2)
+                    {
+                        math::Vector4 p3 = math::toVector4f(m_vPatch.at(((i+1)*m_PatchLen)+j+1));
+                            
+                        glVertex3f(p4[0], p4[1], p4[2]);
+                        glVertex3f(p3[0], p3[1], p3[2]);
+                    }
+                }
+            }
         }
 
     private:

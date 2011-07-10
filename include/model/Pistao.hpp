@@ -17,12 +17,12 @@ namespace model
         {
         }
 
-        void drawInWireframe()
+        void draw(bool wireframe)
         {
-            glBegin(GL_LINES);
+         /*   glBegin(GL_LINES);
                 glVertex3f(m_BasePoint[0],m_BasePoint[1],m_BasePoint[2]);
                 glVertex3f(m_MobilePoint[0],m_MobilePoint[1],m_MobilePoint[2]);
-            glEnd();
+            glEnd();*/
             glPushMatrix();
 
                 math::Vector3 v = m_MobilePoint-m_BasePoint;
@@ -36,10 +36,10 @@ namespace model
 
                 glRotatef(ang,0.f,0.f,1.f);
 
-                m_BaseCylinder.draw();
+                m_BaseCylinder.draw(wireframe);
 
                 glColor4f(1.f,0.f,0.f,1.f);
-                m_MovCylinder.draw();
+                m_MovCylinder.draw(wireframe);
             glPopMatrix();
         }
         math::Vector3 basePoint() { return m_BasePoint; }

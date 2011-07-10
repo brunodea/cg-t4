@@ -8,7 +8,8 @@ Controller *Controller::m_sInstance = NULL;
 
 Controller::Controller()
     : m_bRunning(true),  m_BezierSurface(13), m_MunckMunk(), 
-      m_FreeCamera(math::vector3f(15,15,-15),math::vector3f(0,0,0),math::vector3f(0,1,0))
+      m_FreeCamera(math::vector3f(15,15,-15),math::vector3f(0,0,0),math::vector3f(0,1,0)),
+      m_bWireframeScene(true)
 {
     m_pCurrentCamera = &m_FreeCamera;
 }
@@ -71,17 +72,17 @@ void Controller::onRender()
     rotateCamera();
     gluLookAt(eye[0],eye[1],eye[2], target[0],target[1],target[2], up[0],up[1],up[2]);
 
-    glPushMatrix();
+    /*glPushMatrix();
         glColor4f(1.f,1.f,1.f,1.f);
         glScalef(10.f,10.f,10.f);
-        m_BezierSurface.drawWireframe();
-    glPopMatrix();
+        m_BezierSurface.draw(m_bWireframeScene);
+    glPopMatrix();*/
 
     glPushMatrix();
         glLineWidth(2.f);
         //glScalef(5.f,5.f,5.f);
         glColor4f(1.f,0.f,0.f,1.f);
-        m_MunckMunk.drawWireframe();
+        m_MunckMunk.draw(m_bWireframeScene);
     glPopMatrix();
 }
 
@@ -100,6 +101,9 @@ void Controller::onKeyPressed(int key, int state)
             m_MunckMunk.addArm();
         else if(key == GLFW_KEY_PAGEDOWN)
             m_MunckMunk.removeArm();
+
+        if(key == GLFW_KEY_F1)
+            m_bWireframeScene = !m_bWireframeScene;
     }
 }
 

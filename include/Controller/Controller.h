@@ -35,6 +35,8 @@ private:
     Camera m_FreeCamera;
     Camera *m_pCurrentCamera;
 
+    bool m_bWireframeScene;
+
 }; //end of class Controller
 
 #endif

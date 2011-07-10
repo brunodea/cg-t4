@@ -73,12 +73,12 @@ namespace model
             Arm *a = &m_Arms.at(m_iCurrArm);
             math::Vector3 mp = a->getMobilePoint();
             if(up)
-                mp *= 1.05;
+                mp *= 1.05f;
             else
             {
                 if(math::distance(mp, math::vector3f(0.f,0.f,0.f)) <= 1.f)
                     return;
-                mp *= .95;
+                mp *= .95f;
             }
             a->setMobilePoint(mp);
         }
@@ -100,7 +100,7 @@ namespace model
             }
         }
 
-        void drawWireframe()
+        void draw(bool wireframe)
         {
             glPushMatrix();
                 glTranslatef(pos()[0],pos()[1],pos()[2]);
@@ -109,14 +109,14 @@ namespace model
                 glRotatef(math::radToDegree(m_fYaw)  ,0.f,1.f,0.f);
                 glRotatef(math::radToDegree(m_fPitch),0.f,0.f,1.f);
 
-                m_Body.drawInWireframe();
+                m_Body.draw(wireframe);
 
                 glTranslatef(0.f,m_Body.height(),0.f);
-                drawArmsWireframe();
+                drawArms(wireframe);
             glPopMatrix();
         }
     private:
-        void drawArmsWireframe()
+        void drawArms(bool wireframe)
         {
             glPushMatrix();
                 unsigned int size = m_Arms.size();
@@ -129,7 +129,7 @@ namespace model
                     else
                         glColor4f(0.f,1.f,0.f,1.f);
                     
-                    aux->drawWireframe();
+                    aux->draw(wireframe);
                     math::Vector3 lastPt;
                     Pistao *pistao;
                     for(unsigned int i = 1; i < size; i++)
@@ -143,7 +143,7 @@ namespace model
                         else
                             glColor4f(0.f,1.f,0.f,1.f);
                         glTranslatef(lastPt[0],lastPt[1],lastPt[2]);
-                        aux->drawWireframe();
+                        aux->draw(wireframe);
 
                         glPushMatrix();
                             math::Vector3 pos = math::vector3f(0.f,0.f,0.f);
@@ -158,7 +158,7 @@ namespace model
                             pistao->setMobilePoint(pos+(aux->getMobilePoint()/2.f));
 
                             glColor4f(0.f,0.f,1.f,1.f);
-                            pistao->drawInWireframe();
+                            pistao->draw(wireframe);
                         glPopMatrix();
 
                     }

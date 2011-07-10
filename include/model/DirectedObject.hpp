@@ -40,7 +40,7 @@ namespace model
             m_fPitch += pitch;
         }
 
-        virtual void drawWireframe() = 0;
+        virtual void draw(bool wireframe) = 0;
 
         void setDirection(const math::Vector3 &dir) { m_Direction = dir; }
         math::Vector3 direction() { return m_Direction; }

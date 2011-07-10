@@ -16,59 +16,21 @@ namespace model
             initVertices();
         }
 
-        void drawInWireframe()
+        void draw(bool wireframe)
         {
-            glTranslatef(0.f,m_fHeight,0.f);
-            glBegin(GL_LINES);
-                
-                math::Vector3 v = m_vVertices.at(0);
-                math::Vector3 v2 = m_vVertices.at(1);
-                math::Vector3 v3 = m_vVertices.at(2);
-                math::Vector3 v4 = m_vVertices.at(3);
-
-                math::Vector3 v5 = m_vVertices.at(4);
-                math::Vector3 v6 = m_vVertices.at(5);
-                math::Vector3 v7 = m_vVertices.at(6);
-                math::Vector3 v8 = m_vVertices.at(7);
-                
-                glVertex3f(v[0],v[1],v[2]);
-                glVertex3f(v2[0],v2[1],v2[2]);
-                
-                glVertex3f(v2[0],v2[1],v2[2]);
-                glVertex3f(v3[0],v3[1],v3[2]);
-                
-                glVertex3f(v3[0],v3[1],v3[2]);
-                glVertex3f(v4[0],v4[1],v4[2]);
-                
-                glVertex3f(v4[0],v4[1],v4[2]);
-                glVertex3f(v[0],v[1],v[2]);
-
-                glVertex3f(v5[0],v5[1],v5[2]);
-                glVertex3f(v[0],v[1],v[2]);
-                
-                glVertex3f(v5[0],v5[1],v5[2]);
-                glVertex3f(v6[0],v6[1],v6[2]);
-                
-                glVertex3f(v6[0],v6[1],v6[2]);
-                glVertex3f(v2[0],v2[1],v2[2]);
-
-                glVertex3f(v6[0],v6[1],v6[2]);
-                glVertex3f(v7[0],v7[1],v7[2]);
-                
-                glVertex3f(v7[0],v7[1],v7[2]);
-                glVertex3f(v3[0],v3[1],v3[2]);
-
-                glVertex3f(v7[0],v7[1],v7[2]);
-                glVertex3f(v8[0],v8[1],v8[2]);
-
-                glVertex3f(v8[0],v8[1],v8[2]);
-                glVertex3f(v4[0],v4[1],v4[2]);
-                
-                glVertex3f(v8[0],v8[1],v8[2]);
-                glVertex3f(v5[0],v5[1],v5[2]);
-
-            glEnd();
+            glPushMatrix();
+                glTranslatef(0.f,m_fHeight,0.f);
+                if(wireframe)
+                    glBegin(GL_LINES);
+                else
+                    glBegin(GL_TRIANGLE_FAN);
+                drawVertices();
+                glEnd();
+            glPopMatrix();
         }
+
+
+        
 
         float width() { return m_fWidth; }
         float height() { return m_fHeight; }
@@ -103,6 +65,55 @@ namespace model
             m_vVertices.push_back(v6);
             m_vVertices.push_back(v7);
             m_vVertices.push_back(v8);
+        }
+        void drawVertices()
+        {                
+            math::Vector3 v = m_vVertices.at(0);
+            math::Vector3 v2 = m_vVertices.at(1);
+            math::Vector3 v3 = m_vVertices.at(2);
+            math::Vector3 v4 = m_vVertices.at(3);
+
+            math::Vector3 v5 = m_vVertices.at(4);
+            math::Vector3 v6 = m_vVertices.at(5);
+            math::Vector3 v7 = m_vVertices.at(6);
+            math::Vector3 v8 = m_vVertices.at(7);
+                
+            glVertex3f(v[0],v[1],v[2]);
+            glVertex3f(v2[0],v2[1],v2[2]);
+                
+            glVertex3f(v2[0],v2[1],v2[2]);
+            glVertex3f(v3[0],v3[1],v3[2]);
+                
+            glVertex3f(v3[0],v3[1],v3[2]);
+            glVertex3f(v4[0],v4[1],v4[2]);
+                
+            glVertex3f(v4[0],v4[1],v4[2]);
+            glVertex3f(v[0],v[1],v[2]);
+
+            glVertex3f(v5[0],v5[1],v5[2]);
+            glVertex3f(v[0],v[1],v[2]);
+                
+            glVertex3f(v5[0],v5[1],v5[2]);
+            glVertex3f(v6[0],v6[1],v6[2]);
+                
+            glVertex3f(v6[0],v6[1],v6[2]);
+            glVertex3f(v2[0],v2[1],v2[2]);
+
+            glVertex3f(v6[0],v6[1],v6[2]);
+            glVertex3f(v7[0],v7[1],v7[2]);
+                
+            glVertex3f(v7[0],v7[1],v7[2]);
+            glVertex3f(v3[0],v3[1],v3[2]);
+
+            glVertex3f(v7[0],v7[1],v7[2]);
+            glVertex3f(v8[0],v8[1],v8[2]);
+
+            glVertex3f(v8[0],v8[1],v8[2]);
+            glVertex3f(v4[0],v4[1],v4[2]);
+                
+            glVertex3f(v8[0],v8[1],v8[2]);
+            glVertex3f(v5[0],v5[1],v5[2]);
+
         }
     private:
         float m_fWidth;
