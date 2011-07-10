@@ -16,6 +16,8 @@ namespace model
         MunckMunk()
             : Object(math::vector3f(0.f,0.f,0.f)), m_Body(5.f,2.f), m_Arms(), m_iCurrArm(-1), m_Pistoes()
         {
+            m_fMaxAngle = PI-(PI/10.f);
+            m_fMinAngle = PI/10.f;
             addArm();
             addArm();
             addArm();
@@ -28,8 +30,11 @@ namespace model
         {
             Arm a = Arm(math::vector3f(0.f,0.f,0.f), 5.f);
             m_Arms.push_back(a);
-            if(m_Arms.size() > 1)
+            unsigned int size = m_Arms.size();
+            if(size > 1)
             {
+                Arm *pa = &m_Arms.at(size-1);
+                pa->rotate(0.f,0.f,(m_fMinAngle*1.05f)*(size-1));
                 math::Vector3 base;
                 if(m_Pistoes.size() > 1)
                     base = m_Pistoes.at(m_Pistoes.size()-1).mobilePoint();
@@ -51,6 +56,20 @@ namespace model
             else
                 m_iCurrArm = -1;
         }
+        void growCurrentArm(bool up)
+        {
+            Arm *a = &m_Arms.at(m_iCurrArm);
+            math::Vector3 mp = a->getMobilePoint();
+            if(up)
+                mp *= 1.05;
+            else
+            {
+                if(math::distance(mp, math::vector3f(0.f,0.f,0.f)) <= 1.f)
+                    return;
+                mp *= .95;
+            }
+            a->setMobilePoint(mp);
+        }
 
         void rotateCurrArm(float roll, float yaw, float pitch)
         {
@@ -60,8 +79,12 @@ namespace model
             {
                 Arm *a = &m_Arms.at(i);
                 a->rotate(roll,yaw,pitch);
-                //Pistao *p = &m_Pistoes.at(i-1);
-                //p->setMobilePoint(a->getMobilePoint()/2.f);
+                float angle = math::angle(a->getMobilePoint(), m_Arms.at(i-1).getMobilePoint());
+                if(angle >= m_fMaxAngle || angle < m_fMinAngle)
+                {
+                    a->rotate(-roll,-yaw,-pitch);
+                    break;
+                }
             }
         }
 
@@ -129,6 +152,10 @@ namespace model
         std::vector<Arm> m_Arms;
         std::vector<Pistao> m_Pistoes;
         int m_iCurrArm;
+
+        /*max/min angulo entre 2 braços.*/
+        float m_fMaxAngle;
+        float m_fMinAngle;
 
     }; //end of class MunckMunk.
 } //end of namespace model.

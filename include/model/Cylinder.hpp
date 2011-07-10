@@ -34,7 +34,7 @@ namespace model
                             glVertex3f(v2[0],j,v2[2]);
                         }
                     }*/
-
+                    /* circulo inferior */
                     for(unsigned int i = size/2; i < size-1; i++)
                     {
                         math::Vector3 v1 = m_vVertices.at(i);
@@ -42,7 +42,17 @@ namespace model
                         glVertex3f(v1[0],v1[1],v1[2]);
                         glVertex3f(v2[0],v2[1],v2[2]);
                     }
+
+                    /* circulo superior */
+                    for(unsigned int i = 0; i < size/2; i++)
+                    {
+                        math::Vector3 v1 = m_vVertices.at(i);
+                        math::Vector3 v2 = m_vVertices.at(i+1);
+                        glVertex3f(v1[0],v1[1],v1[2]);
+                        glVertex3f(v2[0],v2[1],v2[2]);
+                    }
                     
+                    /* linhas verticais */
                     for(unsigned int i = 0; i < size/2; i++)
                     {
                         math::Vector3 v1 = m_vVertices.at(i);
@@ -53,7 +63,21 @@ namespace model
                 glEnd();
             glPopMatrix();
         }
+
+        void setHeight(float h) 
+        {
+            reloadVertices();
+            m_fHeight = h; 
+        }
+
     private:
+
+        void reloadVertices()
+        {
+            m_vVertices.clear();
+            initVertices();
+        }
+
         void initVertices()
         {
             for(float i = 0; i <= 2*PI; i += 0.1f)

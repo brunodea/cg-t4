@@ -34,7 +34,7 @@ namespace model
                 glRotatef(m_fYaw,   0.f,1.f,0.f);
                 glRotatef(m_fPitch, 0.f,0.f,1.f);
 
-                //m_Cylinder.draw();
+                m_Cylinder.draw();
             glPopMatrix();
         }
 
@@ -49,6 +49,11 @@ namespace model
             m_fPitch += math::radToDegree(pitch);
         }
         
+        void setMobilePoint(const math::Vector3 &v) 
+        { 
+            m_MobilePoint = v;
+            m_Cylinder.setHeight(math::distance(math::vector3f(0.f,0.f,0.f),m_MobilePoint));
+        }
         math::Vector3 getMobilePoint() { return m_MobilePoint; }
         float length() { return m_fLength; }
     private:

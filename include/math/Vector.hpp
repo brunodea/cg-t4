@@ -112,6 +112,7 @@ namespace math
         res /= val;
         return res;
     }
+
 } //end of namespace math.
 
 #endif

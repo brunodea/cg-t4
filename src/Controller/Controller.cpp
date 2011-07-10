@@ -95,6 +95,14 @@ void Controller::onKeyPressed(int key, int state)
             m_MunckMunk.currentArm_next(true);
         else if(key == GLFW_KEY_DOWN)
             m_MunckMunk.currentArm_next(false);
+        
+        if(key == GLFW_KEY_PAGEUP)
+            m_MunckMunk.addArm();
+
+        if(key == GLFW_KEY_RCTRL)
+            m_MunckMunk.growCurrentArm(true);
+        else if(key == GLFW_KEY_LCTRL)
+            m_MunckMunk.growCurrentArm(false);
     }
 }
 

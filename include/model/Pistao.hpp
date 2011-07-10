@@ -13,7 +13,7 @@ namespace model
     public:
         Pistao(const math::Vector3 &basePoint, const math::Vector3 &mobilePoint)
             : m_FixedPartBox(1.f,2.f), m_MobilePartBox(.5f,1.7f), 
-              m_BasePoint(basePoint), m_MobilePoint(mobilePoint), m_fMaxLength(3.f)
+              m_BasePoint(basePoint), m_MobilePoint(mobilePoint), m_fMaxLength(2.5f)
         {
         }
 
@@ -24,7 +24,7 @@ namespace model
                 glVertex3f(m_MobilePoint[0],m_MobilePoint[1],m_MobilePoint[2]);
             glEnd();
         }
-        
+                
         void setMaxLength(float mlen) { m_fMaxLength = mlen; }
         float getMaxLength() { return m_fMaxLength; }
 
@@ -34,9 +34,6 @@ namespace model
         math::Vector3 mobilePoint() { return m_MobilePoint; }
         void setMobilePoint(const math::Vector3 &p){ m_MobilePoint = p; }
 
-        
-    private:
-        
         bool canMoveUp()
         {
             return (math::distance(m_BasePoint,m_MobilePoint) <= m_fMaxLength);
@@ -45,6 +42,7 @@ namespace model
         {
             return !(math::distance(m_BasePoint,m_MobilePoint) <= 0.05f);
         }
+
     private:
         Box m_FixedPartBox;
         Box m_MobilePartBox;
