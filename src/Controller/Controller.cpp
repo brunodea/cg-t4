@@ -33,17 +33,17 @@ void Controller::run()
     while(m_bRunning)
     {
         cur_time = glfwGetTime();
+        if(cur_time - last_update > update_interval)
+        {
+            onUpdate();
+            last_update = glfwGetTime();
+        }
         if(cur_time - last_render > frame_interval) 
         {
             last_render = glfwGetTime();
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             onRender();
             glfwSwapBuffers();
-        }
-        if(cur_time - last_update > update_interval)
-        {
-            onUpdate();
-            last_update = glfwGetTime();
         }
         glfwSleep(update_interval - (cur_time + glfwGetTime()));
     }
@@ -53,11 +53,21 @@ void Controller::onUpdate()
 {
     if(m_bRunning)
         m_bRunning = !glfwGetWindowParam(GLFW_OPENED) == 0;
-    cameraOnKeyPress();
-    munckMunkOnKeyPress();
 
     if(m_pCurrentCamera == &m_FreeCamera)
-        m_pCurrentCamera->setTarget(m_pCurrentCamera->direction()+m_pCurrentCamera->eye());
+    {
+        //m_pCurrentCamera->setTarget(m_pCurrentCamera->direction()+m_pCurrentCamera->eye());
+        math::Vector3 mdir = math::normalize(m_MunckMunk.direction());
+        mdir *= 40.f;
+        math::Vector3 mpos = m_MunckMunk.pos();
+        m_pCurrentCamera->setTarget(mpos);
+        math::Vector3 e = mpos-mdir;
+        e[1] = 40.f;
+        m_pCurrentCamera->setEye(e);
+    }
+
+    cameraOnKeyPress();
+    munckMunkOnKeyPress();
 }
 
 void Controller::onRender()
@@ -72,11 +82,11 @@ void Controller::onRender()
     rotateCamera();
     gluLookAt(eye[0],eye[1],eye[2], target[0],target[1],target[2], up[0],up[1],up[2]);
 
-    /*glPushMatrix();
+    glPushMatrix();
         glColor4f(1.f,1.f,1.f,1.f);
         glScalef(10.f,10.f,10.f);
         m_BezierSurface.draw(m_bWireframeScene);
-    glPopMatrix();*/
+    glPopMatrix();
 
     glPushMatrix();
         glLineWidth(2.f);
@@ -114,7 +124,7 @@ void Controller::cameraOnKeyPress()
     else if(glfwGetKey('W') == GLFW_PRESS)
         m_pCurrentCamera->moveForward();
 
-    if(glfwGetKey('A') == GLFW_PRESS)
+    /*if(glfwGetKey('A') == GLFW_PRESS)
         m_pCurrentCamera->moveLeft();
     else if(glfwGetKey('D') == GLFW_PRESS)
         m_pCurrentCamera->moveRight();
@@ -122,7 +132,7 @@ void Controller::cameraOnKeyPress()
     if(glfwGetKey('Z') == GLFW_PRESS)
         m_pCurrentCamera->moveUp();
     else if(glfwGetKey('X') == GLFW_PRESS)
-        m_pCurrentCamera->moveDown();
+        m_pCurrentCamera->moveDown();*/
 
     if(glfwGetKey(GLFW_KEY_RCTRL) == GLFW_PRESS)
         m_MunckMunk.growCurrentArm(true);
@@ -132,7 +142,7 @@ void Controller::cameraOnKeyPress()
 
 void Controller::rotateCamera()
 {
-    float roll = m_pCurrentCamera->getRollAngle();
+    /*float roll = m_pCurrentCamera->getRollAngle();
     float yaw = m_pCurrentCamera->getYawAngle();
     float pitch = m_pCurrentCamera->getPitchAngle();
 
@@ -154,7 +164,7 @@ void Controller::rotateCamera()
 
     glRotatef(roll ,1.f,0.f,0.f);
     glRotatef(yaw  ,0.f,1.f,0.f);
-    glRotatef(pitch,0.f,0.f,1.f);
+    glRotatef(pitch,0.f,0.f,1.f);*/
 }
 
 void Controller::munckMunkOnKeyPress()

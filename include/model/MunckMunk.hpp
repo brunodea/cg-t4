@@ -48,10 +48,13 @@ namespace model
         }
         void removeArm()
         {
-            if(m_Arms.size() > 2)
+            unsigned int size = m_Arms.size();
+            if(size > 2)
             {
                 m_Arms.pop_back();
                 m_Pistoes.pop_back();
+                if(m_iCurrArm == size-1)
+                    m_iCurrArm--;
             }
         }
 
@@ -111,7 +114,7 @@ namespace model
 
                 m_Body.draw(wireframe);
 
-                glTranslatef(0.f,m_Body.height(),0.f);
+                glTranslatef(0.f,m_Body.height()*2.f,0.f);
                 drawArms(wireframe);
             glPopMatrix();
         }
@@ -138,8 +141,8 @@ namespace model
                         aux = &m_Arms.at(i);
                         aux->setPos(lastPt);
 
-                        if(i != m_iCurrArm)
-                            glColor4f(1.f/(i*1.05f),1.f/(i*1.2f),1.f/(i*1.32f),1.f);
+                        if(i != m_iCurrArm)                            
+                            glColor4f(1.f,1.f,1.f,1.f);
                         else
                             glColor4f(0.f,1.f,0.f,1.f);
                         glTranslatef(lastPt[0],lastPt[1],lastPt[2]);

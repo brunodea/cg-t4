@@ -81,6 +81,7 @@
     <ClInclude Include="..\include\model\MunckMunk.hpp" />
     <ClInclude Include="..\include\model\Object.hpp" />
     <ClInclude Include="..\include\model\Pistao.hpp" />
+    <ClInclude Include="..\include\model\Truck.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\Controller\Controller.cpp" />

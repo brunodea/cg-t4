@@ -58,11 +58,15 @@ namespace model
         void drawVertices()
         {
             unsigned int size = m_vVertices.size();
+            math::Vector3 normal;
             /* circulo inferior */
             for(unsigned int i = size/2; i < size-1; i++)
             {
                 math::Vector3 v1 = m_vVertices.at(i);
                 math::Vector3 v2 = m_vVertices.at(i+1);
+
+                normal = math::normalize(v1.crossProduct(v2));
+                glNormal3f(normal[0],normal[1],normal[2]);
                 glVertex3f(v1[0],v1[1],v1[2]);
                 glVertex3f(v2[0],v2[1],v2[2]);
             }
@@ -72,6 +76,9 @@ namespace model
             {
                 math::Vector3 v1 = m_vVertices.at(i);
                 math::Vector3 v2 = m_vVertices.at(i+1);
+                
+                normal = math::normalize(v1.crossProduct(v2));
+                glNormal3f(normal[0],normal[1],normal[2]);
                 glVertex3f(v1[0],v1[1],v1[2]);
                 glVertex3f(v2[0],v2[1],v2[2]);
             }
@@ -81,6 +88,9 @@ namespace model
             {
                 math::Vector3 v1 = m_vVertices.at(i);
                 math::Vector3 v2 = m_vVertices.at((size/2)+i);
+
+                normal = math::normalize(v1.crossProduct(v2));
+                glNormal3f(normal[0],normal[1],normal[2]);
                 glVertex3f(v1[0],v1[1],v1[2]);
                 glVertex3f(v2[0],v2[1],v2[2]);
             }
