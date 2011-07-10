@@ -14,24 +14,10 @@ namespace model
     {
     public:
         MunckMunk()
-            : Object(math::vector3f(0.f,0.f,0.f)), m_Body(5.f,2.f), m_Arms(), m_iCurrArm(-1)
+            : Object(math::vector3f(0.f,0.f,0.f)), m_Body(5.f,2.f), m_Arms(), m_iCurrArm(-1), m_Pistoes()
         {
             addArm();
             addArm();
-            addArm();
-            currentArm_next(true);
-        }
-        MunckMunk(const math::Vector3 &pos)
-            : Object(pos), m_Body(5.f,2.f), m_Arms(), m_iCurrArm(-1)
-        {
-            addArm();
-            addArm();
-            addArm();
-            currentArm_next(true);
-        }
-        MunckMunk(const math::Vector3 &pos, float body_width, float body_height)
-            : Object(pos), m_Body(body_width,body_height), m_Arms(), m_iCurrArm(-1)
-        {
             addArm();
             addArm();
             addArm();
@@ -40,7 +26,17 @@ namespace model
 
         void addArm()
         {
-            m_Arms.push_back(Arm(math::vector3f(0.f,0.f,0.f), 5.f));
+            Arm a = Arm(math::vector3f(0.f,0.f,0.f), 5.f);
+            m_Arms.push_back(a);
+            if(m_Arms.size() > 1)
+            {
+                math::Vector3 base;
+                if(m_Pistoes.size() > 1)
+                    base = m_Pistoes.at(m_Pistoes.size()-1).mobilePoint();
+                else
+                    base = math::vector3f(0.f,0.f,0.f);
+                m_Pistoes.push_back(Pistao(base, a.pos()+(a.getMobilePoint()/2.f)));
+            }
         }
         void currentArm_next(bool up)
         {
@@ -64,6 +60,8 @@ namespace model
             {
                 Arm *a = &m_Arms.at(i);
                 a->rotate(roll,yaw,pitch);
+                //Pistao *p = &m_Pistoes.at(i-1);
+                //p->setMobilePoint(a->getMobilePoint()/2.f);
             }
         }
 
@@ -83,24 +81,44 @@ namespace model
                     
                 if(size > 0)
                 {
-                    Arm aux = m_Arms.at(0);
+                    Arm *aux = &m_Arms.at(0);
                     if(m_iCurrArm != 0)
                         glColor4f(1.f,1.f,1.f,1.f);
                     else
                         glColor4f(0.f,1.f,0.f,1.f);
                     
-                    aux.drawWireframe();
+                    aux->drawWireframe();
                     math::Vector3 lastPt;
+                    Pistao *pistao;
                     for(unsigned int i = 1; i < size; i++)
                     {
-                        lastPt = aux.getMobilePoint();
-                        aux = m_Arms.at(i);
+                        lastPt = aux->getMobilePoint();
+                        aux = &m_Arms.at(i);
+                        aux->setPos(lastPt);
+
                         if(i != m_iCurrArm)
-                            glColor4f(1.f/(i*2),1.f/(i*3.f),1.f/(i*6.f),1.f);
+                            glColor4f(1.f/(i*1.05f),1.f/(i*1.2f),1.f/(i*1.32f),1.f);
                         else
                             glColor4f(0.f,1.f,0.f,1.f);
                         glTranslatef(lastPt[0],lastPt[1],lastPt[2]);
-                        aux.drawWireframe();
+                        aux->drawWireframe();
+
+                        glPushMatrix();
+                            math::Vector3 pos = math::vector3f(0.f,0.f,0.f);
+                            for(unsigned int j = 0; j < i; j++)
+                            {
+                                pos += m_Arms.at(i).pos();
+                                glTranslatef(-lastPt[0],-lastPt[1],-lastPt[2]);
+                            }
+                            pistao = &m_Pistoes.at(i-1);
+                            if(i > 1)
+                                pistao->setBasePoint(pos-(m_Arms.at(i-1).getMobilePoint()/2.f));
+                            pistao->setMobilePoint(pos+(aux->getMobilePoint()/2.f));
+
+                            glColor4f(0.f,0.f,1.f,1.f);
+                            pistao->drawInWireframe();
+                        glPopMatrix();
+
                     }
                 }
             glPopMatrix();
@@ -108,8 +126,10 @@ namespace model
 
     private:
         Box m_Body;
-        std::vector<model::Arm> m_Arms;
+        std::vector<Arm> m_Arms;
+        std::vector<Pistao> m_Pistoes;
         int m_iCurrArm;
+
     }; //end of class MunckMunk.
 } //end of namespace model.
 

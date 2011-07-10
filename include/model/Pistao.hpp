@@ -19,32 +19,21 @@ namespace model
 
         void drawInWireframe()
         {
-            drawMobilePartInWireframe();
-            drawFixedPartInWireframe();
-        }
-
-        void drawFixedPartInWireframe()
-        {
             glBegin(GL_LINES);
-                glVertex3f(m_MobilePoint[0],m_MobilePoint[1],m_MobilePoint[2]);
                 glVertex3f(m_BasePoint[0],m_BasePoint[1],m_BasePoint[2]);
+                glVertex3f(m_MobilePoint[0],m_MobilePoint[1],m_MobilePoint[2]);
             glEnd();
-            //m_FixedPartBox.drawInWireframe();
         }
-
-        void drawMobilePartInWireframe()
-        {
-            //m_MobilePartBox.drawInWireframe();
-        }
-
+        
         void setMaxLength(float mlen) { m_fMaxLength = mlen; }
         float getMaxLength() { return m_fMaxLength; }
 
-        void setMobilePoint(const math::Vector3 &p) 
-        {
-            
-            m_MobilePoint = p; 
-        }
+        math::Vector3 basePoint() { return m_BasePoint; }
+        void setBasePoint(const math::Vector3 &p) { m_BasePoint = p; }
+
+        math::Vector3 mobilePoint() { return m_MobilePoint; }
+        void setMobilePoint(const math::Vector3 &p){ m_MobilePoint = p; }
+
         
     private:
         
@@ -56,7 +45,6 @@ namespace model
         {
             return !(math::distance(m_BasePoint,m_MobilePoint) <= 0.05f);
         }
-
     private:
         Box m_FixedPartBox;
         Box m_MobilePartBox;

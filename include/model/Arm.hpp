@@ -15,7 +15,7 @@ namespace model
     public:
         Arm(const math::Vector3 &position, float length)
             : Object(position), m_MobilePoint(math::vector3f(0.f,length,0.f)), 
-              m_Cylinder(0.7f,length), m_Pistao(position,position)
+              m_Cylinder(0.7f,length), m_fLength(length)
         {
             m_fRoll = 0.f;
             m_fYaw = 0.f;
@@ -25,19 +25,16 @@ namespace model
         void drawWireframe()
         {
             glPushMatrix();
-                glPushMatrix();
-                    glBegin(GL_LINES);
-                        glVertex3f(0.f,0.f,0.f);
-                        glVertex3f(m_MobilePoint[0],m_MobilePoint[1],m_MobilePoint[2]);
-                    glEnd();
-                glPopMatrix();
+                glBegin(GL_LINES);
+                    glVertex3f(0.f,0.f,0.f);
+                    glVertex3f(m_MobilePoint[0],m_MobilePoint[1],m_MobilePoint[2]);
+                glEnd();
 
                 glRotatef(m_fRoll,  1.f,0.f,0.f);
                 glRotatef(m_fYaw,   0.f,1.f,0.f);
                 glRotatef(m_fPitch, 0.f,0.f,1.f);
 
-                m_Cylinder.draw();
-
+                //m_Cylinder.draw();
             glPopMatrix();
         }
 
@@ -52,8 +49,8 @@ namespace model
             m_fPitch += math::radToDegree(pitch);
         }
         
-        math::Vector3 getMobilePoint() { return m_MobilePoint+pos(); }
-
+        math::Vector3 getMobilePoint() { return m_MobilePoint; }
+        float length() { return m_fLength; }
     private:
         math::Vector3 m_MobilePoint;
         float m_fRoll;
@@ -61,7 +58,8 @@ namespace model
         float m_fPitch;
 
         Cylinder m_Cylinder;
-        Pistao m_Pistao;
+
+        float m_fLength;
 
     }; //end of class Arm.
 } //end of namespace model.

@@ -104,6 +104,14 @@ namespace math
         }
         return res;
     }
+
+    template<class T, unsigned int M>
+    inline Vector<T, M> operator /(Vector<T, M> &v, T val)
+    {
+        Vector<T, M> res = v;
+        res /= val;
+        return res;
+    }
 } //end of namespace math.
 
 #endif
