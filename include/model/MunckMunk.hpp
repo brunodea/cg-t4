@@ -2,7 +2,7 @@
 #define _BRUNODEA_MUNCK_MUNK_HPP_
 
 #include "math/matrix_functions.hpp"
-#include "model/Object.hpp"
+#include "model/DirectedObject.hpp"
 #include "model/Arm.hpp"
 #include "model/Box.hpp"
 
@@ -10,16 +10,14 @@
 
 namespace model
 {
-    class MunckMunk : public Object
+    class MunckMunk : public DirectedObject
     {
     public:
         MunckMunk()
-            : Object(math::vector3f(0.f,0.f,0.f)), m_Body(5.f,2.f), m_Arms(), m_iCurrArm(-1), m_Pistoes()
+            : DirectedObject(math::vector3f(0.f,0.f,0.f),1.f), m_Body(5.f,2.f), m_Arms(), m_iCurrArm(-1), m_Pistoes()
         {
             m_fMaxAngle = PI-(PI/10.f);
             m_fMinAngle = PI/10.f;
-            addArm();
-            addArm();
             addArm();
             addArm();
             addArm();
@@ -34,7 +32,11 @@ namespace model
             if(size > 1)
             {
                 Arm *pa = &m_Arms.at(size-1);
-                pa->rotate(0.f,0.f,(m_fMinAngle*1.05f)*(size-1));
+                float ang = math::angle(math::vector3f(0.f,1.f,0.f),m_Arms.at(size-2).getMobilePoint());
+                /*std::cout << ang << std::endl;*/
+                if(ang > PI/.9f)
+                    ang *= -1;
+                pa->rotate(0.f,0.f,(ang+(m_fMinAngle*1.05f)));
                 math::Vector3 base;
                 if(m_Pistoes.size() > 1)
                     base = m_Pistoes.at(m_Pistoes.size()-1).mobilePoint();
@@ -43,6 +45,15 @@ namespace model
                 m_Pistoes.push_back(Pistao(base, a.pos()+(a.getMobilePoint()/2.f)));
             }
         }
+        void removeArm()
+        {
+            if(m_Arms.size() > 2)
+            {
+                m_Arms.pop_back();
+                m_Pistoes.pop_back();
+            }
+        }
+
         void currentArm_next(bool up)
         {
             int dir = (up ? 1 : -1);
@@ -91,6 +102,7 @@ namespace model
         void drawWireframe()
         {
             glPushMatrix();
+                glScalef(.3f,.3f,.3f);
                 m_Body.drawInWireframe();
                 glTranslatef(0.f,m_Body.height(),0.f);
                 drawArmsWireframe();

@@ -77,6 +77,7 @@
     <ClInclude Include="..\include\model\Arm.hpp" />
     <ClInclude Include="..\include\model\Box.hpp" />
     <ClInclude Include="..\include\model\Cylinder.hpp" />
+    <ClInclude Include="..\include\model\DirectedObject.hpp" />
     <ClInclude Include="..\include\model\MunckMunk.hpp" />
     <ClInclude Include="..\include\model\Object.hpp" />
     <ClInclude Include="..\include\model\Pistao.hpp" />

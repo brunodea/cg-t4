@@ -8,7 +8,7 @@ Controller *Controller::m_sInstance = NULL;
 
 Controller::Controller()
     : m_bRunning(true),  m_BezierSurface(13), m_MunckMunk(), 
-      m_FreeCamera(math::vector3f(0,0,-1),math::vector3f(0,0,0),math::vector3f(0,1,0))
+      m_FreeCamera(math::vector3f(0,15,-15),math::vector3f(0,0,0),math::vector3f(0,1,0))
 {
     m_pCurrentCamera = &m_FreeCamera;
 }
@@ -71,11 +71,11 @@ void Controller::onRender()
     rotateCamera();
     gluLookAt(eye[0],eye[1],eye[2], target[0],target[1],target[2], up[0],up[1],up[2]);
 
-    //glPushMatrix();
-    //    glColor4f(1.f,1.f,1.f,1.f);
-    //    //glScalef(30.f,30.f,30.f);
-    //    m_BezierSurface.drawWireframe();
-    //glPopMatrix();
+    glPushMatrix();
+        glColor4f(1.f,1.f,1.f,1.f);
+        //glScalef(30.f,30.f,30.f);
+        m_BezierSurface.drawWireframe();
+    glPopMatrix();
 
     glPushMatrix();
         glLineWidth(2.f);
@@ -98,6 +98,8 @@ void Controller::onKeyPressed(int key, int state)
         
         if(key == GLFW_KEY_PAGEUP)
             m_MunckMunk.addArm();
+        else if(key == GLFW_KEY_PAGEDOWN)
+            m_MunckMunk.removeArm();
 
         if(key == GLFW_KEY_RCTRL)
             m_MunckMunk.growCurrentArm(true);
@@ -158,4 +160,9 @@ void Controller::munckMunkOnKeyPress()
         m_MunckMunk.rotateCurrArm(0.f,0.f,angle);
     else if(glfwGetKey(GLFW_KEY_LEFT) == GLFW_PRESS)
         m_MunckMunk.rotateCurrArm(0.f,0.f,-angle);
+
+    if(glfwGetKey('N') == GLFW_PRESS)
+        m_MunckMunk.moveForward();
+    else if(glfwGetKey('M') == GLFW_PRESS)
+        m_MunckMunk.moveBackwards();
  }

@@ -17,7 +17,7 @@ namespace model
         void setPos(const math::Vector3 &pos) { m_Position = pos; }
         math::Vector3 pos() { return m_Position; }
 
-    private:
+    protected:
         math::Vector3 m_Position;
 
     }; //end of class Object.

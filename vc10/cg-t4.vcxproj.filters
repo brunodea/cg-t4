@@ -72,6 +72,9 @@
     <ClInclude Include="..\include\math\math_aux.hpp">
       <Filter>Header Files\math</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\model\DirectedObject.hpp">
+      <Filter>Header Files\model</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp">

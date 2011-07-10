@@ -15,7 +15,7 @@ namespace model
     public:
         Arm(const math::Vector3 &position, float length)
             : Object(position), m_MobilePoint(math::vector3f(0.f,length,0.f)), 
-              m_Cylinder(0.7f,length), m_fLength(length)
+              m_Cylinder(length/10.f,length), m_fLength(length)
         {
             m_fRoll = 0.f;
             m_fYaw = 0.f;
