@@ -69,6 +69,7 @@ namespace model
             reloadVertices();
             m_fHeight = h; 
         }
+        float getHeight() { return m_fHeight; }
 
     private:
 

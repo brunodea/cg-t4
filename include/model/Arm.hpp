@@ -4,7 +4,7 @@
 #include "math/matrix_functions.hpp"
 #include "math/math_aux.hpp"
 #include "model/Object.hpp"
-#include "model/Cylinder.hpp"
+#include "model/Box.hpp"
 #include "model/Pistao.hpp"
 #include "glfw.h"
 
@@ -15,7 +15,7 @@ namespace model
     public:
         Arm(const math::Vector3 &position, float length)
             : Object(position), m_MobilePoint(math::vector3f(0.f,length,0.f)), 
-              m_Cylinder(length/10.f,length), m_fLength(length)
+              m_Box(length/7.f,length/2.f), m_fLength(length)
         {
             m_fRoll = 0.f;
             m_fYaw = 0.f;
@@ -34,7 +34,7 @@ namespace model
                 glRotatef(m_fYaw,   0.f,1.f,0.f);
                 glRotatef(m_fPitch, 0.f,0.f,1.f);
 
-                m_Cylinder.draw();
+                m_Box.drawInWireframe();
             glPopMatrix();
         }
 
@@ -52,7 +52,7 @@ namespace model
         void setMobilePoint(const math::Vector3 &v) 
         { 
             m_MobilePoint = v;
-            m_Cylinder.setHeight(math::distance(math::vector3f(0.f,0.f,0.f),m_MobilePoint));
+            m_Box.setHeight(math::distance(math::vector3f(0.f,0.f,0.f),m_MobilePoint)/2.f);
         }
         math::Vector3 getMobilePoint() { return m_MobilePoint; }
         float length() { return m_fLength; }
@@ -62,7 +62,7 @@ namespace model
         float m_fYaw;
         float m_fPitch;
 
-        Cylinder m_Cylinder;
+        Box m_Box;
 
         float m_fLength;
 

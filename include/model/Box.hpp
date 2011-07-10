@@ -18,7 +18,7 @@ namespace model
 
         void drawInWireframe()
         {
-            
+            glTranslatef(0.f,m_fHeight,0.f);
             glBegin(GL_LINES);
                 
                 math::Vector3 v = m_vVertices.at(0);
@@ -72,8 +72,13 @@ namespace model
 
         float width() { return m_fWidth; }
         float height() { return m_fHeight; }
-
+        void setHeight(float height) { m_fHeight = height; adjustVertices(); }
     private:
+        void adjustVertices()
+        {
+            m_vVertices.clear();
+            initVertices();
+        }
         void initVertices()
         {
             float w = m_fWidth;
@@ -99,7 +104,6 @@ namespace model
             m_vVertices.push_back(v7);
             m_vVertices.push_back(v8);
         }
-
     private:
         float m_fWidth;
         float m_fHeight;

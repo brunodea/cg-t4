@@ -8,7 +8,7 @@ Controller *Controller::m_sInstance = NULL;
 
 Controller::Controller()
     : m_bRunning(true),  m_BezierSurface(13), m_MunckMunk(), 
-      m_FreeCamera(math::vector3f(0,15,-15),math::vector3f(0,0,0),math::vector3f(0,1,0))
+      m_FreeCamera(math::vector3f(15,15,-15),math::vector3f(0,0,0),math::vector3f(0,1,0))
 {
     m_pCurrentCamera = &m_FreeCamera;
 }
@@ -73,7 +73,7 @@ void Controller::onRender()
 
     glPushMatrix();
         glColor4f(1.f,1.f,1.f,1.f);
-        //glScalef(30.f,30.f,30.f);
+        glScalef(10.f,10.f,10.f);
         m_BezierSurface.drawWireframe();
     glPopMatrix();
 
@@ -100,11 +100,6 @@ void Controller::onKeyPressed(int key, int state)
             m_MunckMunk.addArm();
         else if(key == GLFW_KEY_PAGEDOWN)
             m_MunckMunk.removeArm();
-
-        if(key == GLFW_KEY_RCTRL)
-            m_MunckMunk.growCurrentArm(true);
-        else if(key == GLFW_KEY_LCTRL)
-            m_MunckMunk.growCurrentArm(false);
     }
 }
 
@@ -124,6 +119,11 @@ void Controller::cameraOnKeyPress()
         m_pCurrentCamera->moveUp();
     else if(glfwGetKey('X') == GLFW_PRESS)
         m_pCurrentCamera->moveDown();
+
+    if(glfwGetKey(GLFW_KEY_RCTRL) == GLFW_PRESS)
+        m_MunckMunk.growCurrentArm(true);
+    else if(glfwGetKey(GLFW_KEY_LCTRL) == GLFW_PRESS)
+        m_MunckMunk.growCurrentArm(false);
 }
 
 void Controller::rotateCamera()
@@ -160,6 +160,11 @@ void Controller::munckMunkOnKeyPress()
         m_MunckMunk.rotateCurrArm(0.f,0.f,angle);
     else if(glfwGetKey(GLFW_KEY_LEFT) == GLFW_PRESS)
         m_MunckMunk.rotateCurrArm(0.f,0.f,-angle);
+
+    if(glfwGetKey('1') == GLFW_PRESS)
+        m_MunckMunk.rotate(0.f,angle*2.f,0.f);
+    else if(glfwGetKey('2') == GLFW_PRESS)
+        m_MunckMunk.rotate(0.f,-angle*2.f,0.f);
 
     if(glfwGetKey('N') == GLFW_PRESS)
         m_MunckMunk.moveForward();

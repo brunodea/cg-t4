@@ -23,13 +23,24 @@ namespace model
                 glVertex3f(m_BasePoint[0],m_BasePoint[1],m_BasePoint[2]);
                 glVertex3f(m_MobilePoint[0],m_MobilePoint[1],m_MobilePoint[2]);
             glEnd();
-            /*glPushMatrix();
-                glTranslatef(m_BasePoint[0],m_BasePoint[1],m_BasePoint[2]);
+            glPushMatrix();
+
+                math::Vector3 v = m_MobilePoint-m_BasePoint;
+
+                float ang = math::radToDegree(math::angle(v, math::vector3f(0.f,1.f,0.f)));
+                if(v[0] > 0)
+                    ang *= -1;
+
+                math::Vector3 pos = m_BasePoint;
+                glTranslatef(pos[0],pos[1],pos[2]);
+
+                glRotatef(ang,0.f,0.f,1.f);
+
                 m_BaseCylinder.draw();
-                math::Vector3 p = m_MobilePoint/2.f;
-                glTranslatef(p[0],p[1],p[2]);
+
+                glColor4f(1.f,0.f,0.f,1.f);
                 m_MovCylinder.draw();
-            glPopMatrix();*/
+            glPopMatrix();
         }
         math::Vector3 basePoint() { return m_BasePoint; }
         void setBasePoint(const math::Vector3 &p) { m_BasePoint = p; adjustCylinders(); }
@@ -40,8 +51,7 @@ namespace model
         void adjustCylinders()
         {
             float d = math::distance(m_BasePoint, m_MobilePoint);
-            m_BaseCylinder.setHeight(d/2.f);
-            m_MovCylinder.setHeight(d/2.f);
+            m_MovCylinder.setHeight(d);
         }
 
     private:

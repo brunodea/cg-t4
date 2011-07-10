@@ -16,8 +16,8 @@ namespace model
         MunckMunk()
             : DirectedObject(math::vector3f(0.f,0.f,0.f),1.f), m_Body(5.f,2.f), m_Arms(), m_iCurrArm(-1), m_Pistoes()
         {
-            m_fMaxAngle = PI-(PI/10.f);
-            m_fMinAngle = PI/10.f;
+            m_fMaxAngle = PI-(PI/3.f);
+            m_fMinAngle = PI/5.f;
             addArm();
             addArm();
             addArm();
@@ -31,17 +31,18 @@ namespace model
             unsigned int size = m_Arms.size();
             if(size > 1)
             {
+                math::Vector3 aamp = m_Arms.at(size-2).getMobilePoint();
                 Arm *pa = &m_Arms.at(size-1);
-                float ang = math::angle(math::vector3f(0.f,1.f,0.f),m_Arms.at(size-2).getMobilePoint());
-                /*std::cout << ang << std::endl;*/
-                if(ang > PI/.9f)
+                float ang = math::angle(math::vector3f(0.f,1.f,0.f),aamp);
+                
+                if(aamp[0] > 0)
                     ang *= -1;
                 pa->rotate(0.f,0.f,(ang+(m_fMinAngle*1.05f)));
                 math::Vector3 base;
                 if(m_Pistoes.size() > 1)
                     base = m_Pistoes.at(m_Pistoes.size()-1).mobilePoint();
                 else
-                    base = math::vector3f(0.f,0.f,0.f);
+                    base = math::vector3f(-1.f,0.f,0.f);
                 m_Pistoes.push_back(Pistao(base, a.pos()+(a.getMobilePoint()/2.f)));
             }
         }
@@ -102,8 +103,14 @@ namespace model
         void drawWireframe()
         {
             glPushMatrix();
-                glScalef(.3f,.3f,.3f);
+                glTranslatef(pos()[0],pos()[1],pos()[2]);
+
+                glRotatef(math::radToDegree(m_fRoll) ,1.f,0.f,0.f);
+                glRotatef(math::radToDegree(m_fYaw)  ,0.f,1.f,0.f);
+                glRotatef(math::radToDegree(m_fPitch),0.f,0.f,1.f);
+
                 m_Body.drawInWireframe();
+
                 glTranslatef(0.f,m_Body.height(),0.f);
                 drawArmsWireframe();
             glPopMatrix();
