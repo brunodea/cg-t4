@@ -24,11 +24,15 @@ namespace math
         void draw(bool wireframe)
         {
             if(wireframe)
+            {
                 glBegin(GL_LINES);
+                drawVertices();
+            }
             else
-                glBegin(GL_TRIANGLE_FAN);
-            
-            drawVertices();
+            {
+                glBegin(GL_QUADS);
+                drawQuads();
+            }
 
             glEnd();
         }
@@ -73,6 +77,13 @@ namespace math
             }
             updatePatches(0.0415f); //0.0415f melhor precisao.
         }
+        math::Vector3 length()
+        {
+            unsigned int size = m_Bezier.controlPoints()->size();
+            math::Vector3 p1 = m_Bezier.controlPoints()->at(0).at(0);
+            math::Vector3 p2 = m_Bezier.controlPoints()->at(0).at(size-1);
+            return p1-p2;
+        }
 
         Bezier getBezier() { return m_Bezier; }
 
@@ -103,30 +114,16 @@ namespace math
                 {
                     math::Vector4 p = math::toVector4f(m_vPatch.at((i*m_PatchLen)+j));
                     math::Vector4 p2 = math::toVector4f(m_vPatch.at(((i+1)*m_PatchLen)+j));
+                    math::Vector4 p3 = math::toVector4f(m_vPatch.at(((i+1)*m_PatchLen)+j+1));
                     math::Vector4 p4 = math::toVector4f(m_vPatch.at((i*m_PatchLen)+j+1));
 
-                    math::Vector3 normal = math::toVector3f(math::normalize(p.crossProduct(p4)));
+                    math::Vector3 normal = math::toVector3f(math::normalize(p2.crossProduct(p4)));
 
                     glNormal3f(normal[0],normal[1],normal[2]);
                     glVertex3f(p[0], p[1], p[2]);
                     glVertex3f(p2[0], p2[1], p2[2]);
-                    glVertex3f(p[0], p[1],p[2]);
+                    glVertex3f(p3[0], p3[1], p3[2]);
                     glVertex3f(p4[0], p4[1], p4[2]);
-
-                    if(i == m_PatchLen-2)
-                    {
-                        math::Vector4 p3 = math::toVector4f(m_vPatch.at(((i+1)*m_PatchLen)+j+1));
-                            
-                        glVertex3f(p2[0], p2[1], p2[2]);
-                        glVertex3f(p3[0], p3[1], p3[2]);
-                    }
-                    if(j == m_PatchLen-2)
-                    {
-                        math::Vector4 p3 = math::toVector4f(m_vPatch.at(((i+1)*m_PatchLen)+j+1));
-                            
-                        glVertex3f(p4[0], p4[1], p4[2]);
-                        glVertex3f(p3[0], p3[1], p3[2]);
-                    }
                 }
             }
         }
@@ -139,10 +136,11 @@ namespace math
                 {
                     math::Vector4 p = math::toVector4f(m_vPatch.at((i*m_PatchLen)+j));
                     math::Vector4 p2 = math::toVector4f(m_vPatch.at(((i+1)*m_PatchLen)+j));
+                    math::Vector4 p3 = math::toVector4f(m_vPatch.at(((i+1)*m_PatchLen)+j+1));
                     math::Vector4 p4 = math::toVector4f(m_vPatch.at((i*m_PatchLen)+j+1));
 
-                    math::Vector3 normal = math::toVector3f(math::normalize(p2.crossProduct(p4)));
-
+                    math::Vector3 normal = math::toVector3f(math::normalize(p.crossProduct(p3)));
+                    
                     glNormal3f(normal[0],normal[1],normal[2]);
                     glVertex3f(p[0], p[1], p[2]);
                     glVertex3f(p2[0], p2[1], p2[2]);
@@ -151,15 +149,11 @@ namespace math
 
                     if(i == m_PatchLen-2)
                     {
-                        math::Vector4 p3 = math::toVector4f(m_vPatch.at(((i+1)*m_PatchLen)+j+1));
-                            
                         glVertex3f(p2[0], p2[1], p2[2]);
                         glVertex3f(p3[0], p3[1], p3[2]);
                     }
                     if(j == m_PatchLen-2)
-                    {
-                        math::Vector4 p3 = math::toVector4f(m_vPatch.at(((i+1)*m_PatchLen)+j+1));
-                            
+                    {                           
                         glVertex3f(p4[0], p4[1], p4[2]);
                         glVertex3f(p3[0], p3[1], p3[2]);
                     }

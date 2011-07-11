@@ -1,3 +1,7 @@
+/*
+    Classe abstrata que representa um simples objeto. Que pode ser desenhado e tem uma
+    posicao no mundo.
+ */
 #ifndef _BRUNODEA_OBJECT_HPP_
 #define _BRUNODEA_OBJECT_HPP_
 

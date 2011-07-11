@@ -1,3 +1,7 @@
+/*
+    Classe abstrata que representa um objeto direcionado. (que tem uma direcao).
+    Ou seja, que pode se mover/rotacionar, etc.
+ */
 #ifndef _BRUNODEA_DIRECTED_OBJECT_HPP_
 #define _BRUNODEA_DIRECTED_OBJECT_HPP_
 

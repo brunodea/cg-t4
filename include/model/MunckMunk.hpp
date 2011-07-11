@@ -1,3 +1,7 @@
+/*
+    Classe que representa um MunckMunk. Pode ter N bracos (no minimo 2)
+    e pra cada braco (sem contar o primeiro, que eh fixo) esta associado um pistao.
+ */
 #ifndef _BRUNODEA_MUNCK_MUNK_HPP_
 #define _BRUNODEA_MUNCK_MUNK_HPP_
 
@@ -84,6 +88,8 @@ namespace model
                 mp *= .95f;
             }
             a->setMobilePoint(mp);
+            if(m_iCurrArm >= 1)
+                Pistao *p = &m_Pistoes.at(m_iCurrArm-1);
         }
 
         void rotateCurrArm(float roll, float yaw, float pitch)

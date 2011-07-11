@@ -92,6 +92,8 @@ namespace math
                 }
             glEnd();
         }
+        
+        std::vector<std::vector<math::Vector3>> *controlPoints() { return &m_vControlPoints; }
 
     private:
         std::vector<std::vector<math::Vector3>> m_vControlPoints;

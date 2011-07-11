@@ -253,6 +253,18 @@ namespace math
         return sqrt(pow(p2(0,0)-p1(0,0),2)+pow(p2(1,0)-p1(1,0),2)+pow(p2(2,0)+p1(2,0),2));
     }
 
+    //verifica se position esta dentro do plano formado por d1 e d2.
+    inline bool isInside(Vector3 &position, Vector3 &d1, Vector3 &d2)
+    {
+        float x = position[0];
+        float y = position[1];
+        float z = position[2];
+
+        if(x >= d1[0] && x <= d2[0] && y >= d1[1] && y <= d2[1] && z >= d1[2] && z <= d2[2])
+            return true;
+        return false;
+    }
+
 } //end of namespace math.
 
 

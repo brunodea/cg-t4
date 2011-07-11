@@ -1,3 +1,6 @@
+/*
+    Classe que representa uma Caixa.
+ */
 #ifndef _BRUNODEA_BOX_HPP_
 #define _BRUNODEA_BOX_HPP_
 
@@ -33,9 +36,6 @@ namespace model
                 glEnd();
             glPopMatrix();
         }
-
-
-        
 
         float width() { return m_fWidth; }
         float height() { return m_fHeight; }

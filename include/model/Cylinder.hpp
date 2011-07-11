@@ -1,3 +1,6 @@
+/*
+    Classe que representa um cilindro.
+ */
 #ifndef _BRUNODEA_CYLINDER_HPP_
 #define _BRUNODEA_CYLINDER_HPP_
 

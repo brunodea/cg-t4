@@ -1,3 +1,6 @@
+/**
+    classe que representa um braco do MunckMunk.
+ **/
 #ifndef _BRUNODEA_ARM_HPP_
 #define _BRUNODEA_ARM_HPP_
 
@@ -25,11 +28,6 @@ namespace model
         void draw(bool wireframe)
         {
             glPushMatrix();
-                /*glBegin(GL_LINES);
-                    glVertex3f(0.f,0.f,0.f);
-                    glVertex3f(m_MobilePoint[0],m_MobilePoint[1],m_MobilePoint[2]);
-                glEnd();*/
-
                 glRotatef(m_fRoll,  1.f,0.f,0.f);
                 glRotatef(m_fYaw,   0.f,1.f,0.f);
                 glRotatef(m_fPitch, 0.f,0.f,1.f);

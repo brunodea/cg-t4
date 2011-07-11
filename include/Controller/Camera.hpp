@@ -1,3 +1,6 @@
+/**
+    Classe que lida com as funcoes de uma camera sintetica.
+ **/
 #ifndef _BRUNODEA_CAMERA_HPP_
 #define _BRUNODEA_CAMERA_HPP_
 
@@ -16,9 +19,6 @@ public:
 
     void rotate(float roll_angle, float yaw_angle, float pitch_angle)
     {
-        /*math::Matrix4 m = math::rotateZ(pitch_angle)*math::rotateY(yaw_angle)*math::rotateX(roll_angle);
-        transform(m);*/
-        
         setRollAngle(getRollAngle()+math::radToDegree(roll_angle));
         setYawAngle(getYawAngle()+math::radToDegree(yaw_angle));
         setPitchAngle(getPitchAngle()+math::radToDegree(pitch_angle));
@@ -64,24 +64,6 @@ public:
 
     void setPitchAngle(float pitch) { m_fPitchAngle = pitch; }
     float getPitchAngle() { return m_fPitchAngle; }
-
-private:
-    void transform(const math::Matrix4 &mat)
-    {
-        math::Matrix4 m = mat;
-
-        math::Vector4 dir = math::toVector4f(m_vDirection3);
-        dir = m*dir;
-        m_vDirection3 = math::normalize(math::toVector3f(dir));
-
-        math::Vector4 up = math::toVector4f(m_vUp3);
-        up = m*up;
-        m_vUp3 = math::normalize(math::toVector3f(up));
-
-        math::Vector4 right = math::toVector4f(m_vRight3);
-        right = m*right;
-        m_vRight3 = math::normalize(math::toVector3f(right));
-    }
 
 private:
     math::Vector3 m_vEye3;
